@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SiPanen — Dashboard Manajemen Panen</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="brand-icon">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <a
+            class="nav-link active"
+            data-section="dashboard"
+            title="Ringkasan Dashboard">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </a>
+          <a
+            class="nav-link"
+            data-section="batch"
+            title="Pencatatan Hasil Panen">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </a>
+          <a class="nav-link" data-section="queue" title="Antrean Bongkar Muat">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          </a>
+          <a
+            class="nav-link"
+            data-section="tracking"
+            title="Lacak Rute Komoditas">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </a>
+          <a class="nav-link" data-section="search" title="Pencarian Data">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </a>
+          <a
+            class="nav-link"
+            data-section="undo"
+            title="Riwayat Aktivitas & Koreksi">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <path d="M3 7v6h6"></path>
+              <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path>
+            </svg>
+            <span class="nav-badge" id="undo-badge">0</span>
+          </a>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <div class="topbar-title">Banyuwangi Harvest Management</div>
+          </div>
+          <div class="topbar-right">
+            <div class="time-chip">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              Sistem Online
+            </div>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <section id="dashboard" class="section-page active">
+            <div class="section-header flex-between">
+              <div>
+                <h1 class="section-title">Ringkasan Operasional</h1>
+                <p class="section-desc">
+                  Pantau performa panen dan logistik secara real-time
+                </p>
+              </div>
+              <button class="btn btn-dark">Export Laporan</button>
+            </div>
+
+            <div class="grid-4 mb-16">
+              <div class="stat-card primary">
+                <div class="stat-label">Total Setoran</div>
+                <div class="stat-value">
+                  <span id="stat-total-batch">—</span>
+                  <span style="font-size: 14px; font-weight: 400; opacity: 0.8"
+                    >Batch</span
+                  >
+                </div>
+                <div class="stat-desc">Transaksi aktif hari ini</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Volume Komoditas</div>
+                <div
+                  class="stat-value"
+                  id="stat-total-kg"
+                  style="color: #1a1a1a">
+                  —
+                </div>
+                <div class="stat-desc">Total berat di gudang</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Estimasi Nilai Pasar</div>
+                <div
+                  class="stat-value"
+                  id="stat-total-nilai"
+                  style="color: #1a1a1a">
+                  —
+                </div>
+                <div class="stat-desc">Valuasi berdasarkan kualitas</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Armada Truk Aktif</div>
+                <div class="stat-value">
+                  <span id="stat-truk" style="color: #1a1a1a">—</span
+                  ><span style="font-size: 24px; color: #a0a0a0"> unit</span>
+                </div>
+                <div class="stat-desc">Menunggu bongkar muat</div>
+              </div>
+            </div>
+
+            <div class="grid-2 mb-16">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Distribusi Kualitas Panen</h3>
+                </div>
+                <div class="card-body">
+                  <div class="grade-distribution">
+                    <div class="grade-row">
+                      <span class="grade-label">Grade A</span>
+                      <div class="grade-bar-wrap">
+                        <div
+                          class="grade-bar a"
+                          id="bar-grade-a"
+                          style="width: 0%"></div>
+                      </div>
+                      <div class="grade-count-pair">
+                        <span class="grade-num" id="grade-a-val">0</span>
+                        <span class="grade-pct" id="grade-a-pct">0%</span>
+                      </div>
+                    </div>
+                    <div class="grade-row">
+                      <span class="grade-label">Grade B</span>
+                      <div class="grade-bar-wrap">
+                        <div
+                          class="grade-bar b"
+                          id="bar-grade-b"
+                          style="width: 0%"></div>
+                      </div>
+                      <div class="grade-count-pair">
+                        <span class="grade-num" id="grade-b-val">0</span>
+                        <span class="grade-pct" id="grade-b-pct">0%</span>
+                      </div>
+                    </div>
+                    <div class="grade-row">
+                      <span class="grade-label">Reject</span>
+                      <div class="grade-bar-wrap">
+                        <div
+                          class="grade-bar r"
+                          id="bar-grade-r"
+                          style="width: 0%"></div>
+                      </div>
+                      <div class="grade-count-pair">
+                        <span class="grade-num" id="grade-r-val">0</span>
+                        <span class="grade-pct" id="grade-r-pct">0%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Proporsi Stok Komoditas</h3>
+                </div>
+                <div class="card-body">
+                  <div class="komoditas-bars">
+                    <div class="komoditas-bar-row">
+                      <div class="komoditas-bar-label">
+                        <span>Kopi Robusta</span>
+                        <span id="bar-kopi-lbl"></span>
+                      </div>
+                      <div class="bar-outer">
+                        <div
+                          class="bar-inner kopi"
+                          id="bar-kopi"
+                          style="width: 0%"></div>
+                      </div>
+                    </div>
+                    <div class="komoditas-bar-row">
+                      <div class="komoditas-bar-label">
+                        <span>Buah Naga</span> <span id="bar-bng-lbl"></span>
+                      </div>
+                      <div class="bar-outer">
+                        <div
+                          class="bar-inner bng"
+                          id="bar-bng"
+                          style="width: 0%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Setoran Petani Terbaru</h3>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ID Batch</th>
+                      <th>Komoditas</th>
+                      <th>Berat</th>
+                      <th>Kualitas</th>
+                      <th>Estimasi Harga</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-tbody">
+                    <tr>
+                      <td colspan="5" class="empty-state-table">
+                        Memuat data...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="batch" class="section-page">
+            <div class="section-header">
+              <h1 class="section-title">Pencatatan Hasil Panen</h1>
+              <p class="section-desc">
+                Input data spesifik kualitas komoditas dari petani untuk
+                estimasi harga
+              </p>
+            </div>
+            <div class="grid-2" style="align-items: start">
+              <div class="card form-card">
+                <h3 class="card-title mb-16">Penerimaan Barang Baru</h3>
+                <form id="form-batch" autocomplete="off">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label>Komoditas</label
+                      ><select name="komoditas" id="form-komoditas" required>
+                        <option value="kopi">Kopi Robusta</option>
+                        <option value="buah_naga">Buah Naga</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Hasil Sortir</label
+                      ><select name="kualitas" id="form-kualitas" required>
+                        <option value="GRADE_A">Grade A (Ekspor)</option>
+                        <option value="GRADE_B" selected>
+                          Grade B (Lokal)
+                        </option>
+                        <option value="REJECT">Reject</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Berat Aktual (kg)</label
+                      ><input
+                        type="number"
+                        name="berat"
+                        id="form-berat"
+                        min="1"
+                        step="0.1"
+                        required />
+                    </div>
+                    <div class="form-group">
+                      <label>Nama Petani / Mitra</label
+                      ><input
+                        type="text"
+                        name="petani"
+                        id="form-petani"
+                        required />
+                    </div>
+                    <div class="form-group">
+                      <label>Asal Kebun</label
+                      ><input
+                        type="text"
+                        name="lokasi"
+                        id="form-lokasi"
+                        placeholder="Misal: Lereng Ijen" />
+                    </div>
+                    <div class="form-group">
+                      <label>Catatan Tambahan</label
+                      ><input type="text" name="catatan" id="form-catatan" />
+                    </div>
+                  </div>
+                  <div id="kopi-fields" class="extra-fields mt-16">
+                    <div class="form-group">
+                      <label>Kadar Air (%) - <i>Penentu harga Kopi</i></label
+                      ><input
+                        type="number"
+                        name="kadar_air"
+                        id="form-kadar-air"
+                        value="12"
+                        step="0.5" />
+                    </div>
+                  </div>
+                  <div
+                    id="bng-fields"
+                    class="extra-fields mt-16"
+                    style="display: none">
+                    <div class="form-group">
+                      <label
+                        >Ukuran Rata-rata -
+                        <i>Penentu harga Buah Naga</i></label
+                      ><select name="ukuran" id="form-ukuran">
+                        <option value="SMALL">Small</option>
+                        <option value="MEDIUM" selected>Medium</option>
+                        <option value="LARGE">Large</option>
+                        <option value="JUMBO">Jumbo</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-full mt-16">
+                    Simpan Data Panen
+                  </button>
+                </form>
+              </div>
+              <div class="card p-0">
+                <div class="card-header flex-between">
+                  <span id="batch-count" class="font-semibold">— batch</span>
+                  <input
+                    type="search"
+                    id="batch-search"
+                    class="input-search"
+                    placeholder="Cari ID / Nama Petani..." />
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ID Batch</th>
+                        <th>Komoditas</th>
+                        <th>Berat</th>
+                        <th>Petani</th>
+                        <th>Grade</th>
+                        <th>Harga Jual</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="batch-tbody">
+                      <tr>
+                        <td colspan="7" class="empty-state-table">
+                          Memuat data...
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="queue" class="section-page">
+            <div class="section-header">
+              <h1 class="section-title">Antrean Armada Logistik</h1>
+              <p class="section-desc">
+                Pengaturan urutan masuk dan keluar truk di area gudang secara
+                terstruktur
+              </p>
+            </div>
+            <div class="grid-2" style="align-items: start">
+              <div class="card form-card">
+                <h3 class="card-title mb-16">Kedatangan Armada Baru</h3>
+                <form id="form-truk" autocomplete="off">
+                  <div class="form-grid">
+                    <div class="form-group span-2">
+                      <label>Nomor Polisi Kendaraan</label
+                      ><input type="text" name="plat" id="truk-plat" required />
+                    </div>
+                    <div class="form-group">
+                      <label>Nama Pengemudi</label
+                      ><input
+                        type="text"
+                        name="supir"
+                        id="truk-supir"
+                        required />
+                    </div>
+                    <div class="form-group">
+                      <label>Kapasitas Muat (kg)</label
+                      ><input
+                        type="number"
+                        name="kapasitas"
+                        id="truk-kapasitas"
+                        required />
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-full mt-16">
+                    Daftarkan Antrean
+                  </button>
+                </form>
+                <hr class="divider" />
+                <button id="btn-proses-antrian" class="btn btn-dark w-full">
+                  Panggil Truk Urutan Terdepan
+                </button>
+              </div>
+              <div>
+                <div class="flex-between mb-16">
+                  <h3 class="card-title">Daftar Menunggu</h3>
+                  <span id="queue-count" class="badge-count">— menunggu</span>
+                </div>
+                <div id="queue-list" class="truk-list">
+                  <div class="empty-state-table">Memuat data antrian...</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="tracking" class="section-page">
+            <div class="section-header">
+              <h1 class="section-title">Lacak Rute Komoditas</h1>
+              <p class="section-desc">
+                Pantau jejak pergerakan dan status pengolahan komoditas dari
+                hulu ke hilir
+              </p>
+            </div>
+            <div class="grid-2">
+              <div class="card form-card">
+                <h3 class="card-title mb-16">Perbarui Posisi Barang</h3>
+                <select id="tracking-batch-select" class="w-full mb-16">
+                  <option value="">-- Pilih Batch Komoditas --</option>
+                </select>
+                <form id="form-tracking">
+                  <div class="form-group mb-16">
+                    <label>Posisi Saat Ini (Checkpoint)</label
+                    ><input
+                      type="text"
+                      name="lokasi"
+                      placeholder="Misal: Gudang Pengeringan"
+                      required />
+                  </div>
+                  <div class="form-group mb-16">
+                    <label>Keterangan Proses</label
+                    ><input
+                      type="text"
+                      name="keterangan"
+                      placeholder="Misal: Sedang dijemur untuk mengurangi kadar air"
+                      required />
+                  </div>
+                  <button type="submit" class="btn btn-primary w-full">
+                    Simpan Pembaruan
+                  </button>
+                </form>
+                <div class="mt-16 p-16 bg-light rounded">
+                  <div class="font-semibold text-sm mb-8">
+                    Riwayat Rute Sebelumnya:
+                  </div>
+                  <div
+                    id="tracking-mundur"
+                    class="text-sm font-mono text-muted">
+                    —
+                  </div>
+                </div>
+              </div>
+              <div class="card p-24">
+                <h3 class="card-title mb-16">Timeline Perjalanan</h3>
+                <div id="tracking-timeline">
+                  <div class="empty-state-table">
+                    Pilih batch komoditas terlebih dahulu
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="search" class="section-page">
+            <div class="section-header">
+              <h1 class="section-title">Sistem Pencarian Cepat</h1>
+              <p class="section-desc">
+                Temukan dokumen spesifik dari ribuan data tanpa menunggu lama
+              </p>
+            </div>
+            <div class="grid-2">
+              <div class="card form-card">
+                <h3 class="card-title mb-16">Cari Dokumen by ID</h3>
+                <div class="flex gap-8 mb-16">
+                  <input
+                    type="text"
+                    id="bst-search-input"
+                    class="w-full"
+                    placeholder="Ketik ID Batch (Contoh: KPI-1001)" />
+                  <button class="btn btn-primary" id="bst-search-btn">
+                    Cari Data
+                  </button>
+                </div>
+                <div id="bst-result"></div>
+              </div>
+              <div class="card">
+                <div class="card-header flex-between">
+                  <h3 class="card-title">Indeks Data Tersimpan</h3>
+                  <span id="bst-size" class="badge-count">0 dokumen</span>
+                </div>
+                <div class="card-body">
+                  <div id="bst-visual" class="bst-tree">Memuat indeks...</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="undo" class="section-page">
+            <div class="section-header flex-between">
+              <div>
+                <h1 class="section-title">Log Aktivitas & Koreksi</h1>
+                <p class="section-desc">
+                  Audit trail untuk membatalkan kesalahan operasional
+                </p>
+              </div>
+              <button class="btn btn-dark" id="btn-undo">
+                Batalkan Aksi Terakhir
+              </button>
+            </div>
+            <div class="card">
+              <div class="card-header flex-between">
+                <h3 class="card-title">Riwayat Sistem</h3>
+                <span id="undo-size" class="badge-count">— aksi terekam</span>
+              </div>
+              <div class="card-body">
+                <div id="undo-history">
+                  <div class="empty-state-table">
+                    Sistem belum mendeteksi aktivitas
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-overlay" id="ekspor-modal">
+      <div class="modal-box">
+        <div class="modal-head flex-between mb-16">
+          <h3 class="card-title">Dokumen Izin Ekspor</h3>
+          <button
+            class="btn-icon"
+            id="modal-close"
+            style="
+              background: none;
+              border: none;
+              font-size: 20px;
+              cursor: pointer;
+            ">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="doc-field">
+            <span>Nomor Registrasi</span
+            ><span id="modal-no-doc" class="font-mono font-semibold">—</span>
+          </div>
+          <div class="doc-field">
+            <span>Komoditas Utama</span><span id="modal-komoditas">—</span>
+          </div>
+          <div class="doc-field">
+            <span>Total Muatan</span><span id="modal-berat">—</span>
+          </div>
+          <div class="doc-field">
+            <span>Status Kualitas</span><span id="modal-kualitas">—</span>
+          </div>
+          <div class="doc-field">
+            <span>Mitra / Petani</span><span id="modal-petani">—</span>
+          </div>
+          <div class="doc-field">
+            <span>Tanggal Terbit</span><span id="modal-tgl">—</span>
+          </div>
+          <div class="doc-field">
+            <span>Tujuan Pasar</span><span id="modal-dest">—</span>
+          </div>
+          <div class="doc-field mt-16 pt-16 border-t">
+            <span class="font-semibold">Nilai Transaksi (FOB)</span
+            ><span id="modal-harga" class="text-primary font-bold text-lg"
+              >—</span
+            >
+          </div>
+        </div>
+        <div class="mt-24">
+          <button
+            class="btn btn-primary w-full"
+            onclick="
+              document
+                .getElementById('ekspor-modal')
+                .classList.remove('modal-open')
+            ">
+            Tutup Dokumen
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="toast-container"></div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
